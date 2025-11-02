@@ -1,20 +1,41 @@
 /**
- * Функція для формування повідомлення про вартість доставки.
- * @param {string} country - Країна доставки.
- * @param {number} price - Загальна вартість товару.
- * @param {number} deliveryFee - Вартість доставки.
- * @returns {string} - Повідомлення про повну вартість.
+ * Функція форматує рядок: обрізає його до maxLength і додає трикрапку,
+ * якщо рядок перевищує максимальну довжину.
+ * @param {string} message - Вхідний рядок.
+ * @param {number} maxLength - Максимально допустима довжина рядка.
+ * @returns {string} - Обрізаний або початковий рядок.
  */
-function getShippingMessage(country, price, deliveryFee) {
-  // 1. Обчислюємо загальну вартість
-  const totalPrice = price + deliveryFee;
+function formatMessage(message, maxLength) {
+  // Перевіряємо довжину рядка
+  if (message.length <= maxLength) {
+    // Якщо довжина в межах ліміту, повертаємо початковий рядок
+    return message;
+  } else {
+    // Якщо довжина перевищує ліміт, обрізаємо рядок
+    // і додаємо трикрапку "..."
 
-  // 2. Формуємо та повертаємо рядок результату
-  return `Shipping to ${country} will cost ${totalPrice} credits`;
+    // Використовуємо метод .slice() для обрізання до maxLength символів
+    const trimmedMessage = message.slice(0, maxLength);
+
+    return trimmedMessage + "...";
+  }
 }
+
+// Приклади перевірки роботи функції
+
+//  Рядок не обрізається (довжина 18 <= 25)
+console.log(formatMessage("Curabitur ligula sapien", 25));
+// Очікуваний результат: "Curabitur ligula sapien"
+
+//  Рядок не обрізається (довжина 20 <= 20)
+console.log(formatMessage("Curabitur ligula sapien", 20));
+// Очікуваний результат: "Curabitur ligula sapie..." (якщо max-length 20, то обрізається)
 
 // Виклики для перевірки коректності роботи
 
-console.log(getShippingMessage("Australia", 120, 50)); // "Shipping to Australia will cost 170 credits"
-console.log(getShippingMessage("Germany", 80, 20)); // "Shipping to Germany will cost 100 credits"
-console.log(getShippingMessage("Sweden", 100, 20)); // "Shipping to Sweden will cost 120 credits"
+console.log(formatMessage("Curabitur ligula sapien", 16)); // "Curabitur ligula..."
+console.log(formatMessage("Curabitur ligula sapien", 23)); // "Curabitur ligula sapien"
+console.log(formatMessage("Vestibulum facilisis purus nec", 20)); // "Vestibulum facilisis..."
+console.log(formatMessage("Vestibulum facilisis purus nec", 30)); // "Vestibulum facilisis purus nec"
+console.log(formatMessage("Nunc sed turpis a felis in nunc fringilla", 15)); // "Nunc sed turpis..."
+console.log(formatMessage("Nunc sed turpis a felis in nunc fringilla", 41)); // "Nunc sed turpis a felis in nunc fringilla"
