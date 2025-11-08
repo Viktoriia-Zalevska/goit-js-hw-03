@@ -1,21 +1,22 @@
-function makeTransaction(quantity, pricePerDroid, customerCredits) {
-  // Обчислюємо загальну вартість
-  const totalPrice = quantity * pricePerDroid;
+function slugify(title) {
+  // 1. Приводимо весь рядок до нижнього регістру (вимога 2).
+  const lowerCaseTitle = title.toLowerCase();
 
-  //  Додаємо перевірку, чи зможе клієнт оплатити замовлення
-  if (totalPrice > customerCredits) {
-    // Якщо коштів недостатньо
-    return "Insufficient funds!";
-  } else {
-    // Якщо коштів достатньо або рівно
-    return `You ordered ${quantity} droids worth ${totalPrice} credits!`;
-  }
+  // 2. Розбиваємо рядок на масив слів, використовуючи пробіл як роздільник.
+  // Завдання гарантує, що слова розділені лише пробілами (вимога 1).
+  const words = lowerCaseTitle.split(' ');
+
+  // 3. Об'єднуємо слова масиву назад у рядок, використовуючи тире (-) як роздільник (вимога 3).
+  const slug = words.join('-');
+
+  // 4. Повертаємо готовий slug.
+  return slug;
 }
 
 // Виклики для перевірки коректності роботи
 
-console.log(makeTransaction(5, 3000, 23000)); // "You ordered 5 droids worth 15000 credits!"
-console.log(makeTransaction(3, 1000, 15000)); // "You ordered 3 droids worth 3000 credits!"
-console.log(makeTransaction(10, 5000, 8000)); // "Insufficient funds!"
-console.log(makeTransaction(8, 2000, 10000)); // "Insufficient funds!"
-console.log(makeTransaction(10, 500, 5000)); // "You ordered 10 droids worth 5000 credits!"
+console.log(slugify("Arrays for beginners")); // "arrays-for-beginners"
+console.log(slugify("English for developer")); // "english-for-developer"
+console.log(slugify("Ten secrets of JavaScript")); // "ten-secrets-of-javascript"
+console.log(slugify("How to become a JUNIOR developer in TWO WEEKS")); // "how-to-become-a-junior-developer-in-two-weeks"
+

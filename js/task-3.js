@@ -1,28 +1,24 @@
-/**
- * Функція перевіряє рядок на наявність заборонених слів "spam" або "sale".
- * Перевірка виконується незалежно від регістру.
- * * @param {string} message - Вхідний рядок для перевірки.
- * @returns {boolean} - true, якщо знайдено спам, інше false.
- */
-function checkForSpam(message) {
-  // 1. Приводимо весь рядок до нижнього регістру для коректного порівняння
-  const normalizedMessage = message.toLowerCase();
+function filterArray(numbers, value) {
+  // 1. Створюємо порожній масив для зберігання результатів.
+  const filteredNumbers = [];
 
-  // 2. Перевіряємо, чи містить нормалізований рядок заборонені слова
-  // Використовуємо логічний оператор АБО (||)
-  const includesSpam = normalizedMessage.includes("spam");
-  const includesSale = normalizedMessage.includes("sale");
+  // 2. Використовуємо цикл for...of для ітерації по кожному елементу масиву numbers.
+  for (const number of numbers) {
+    // 3. Перевіряємо, чи поточний елемент більший за задане значення (value).
+    if (number > value) {
+      // Якщо умова виконується, додаємо число до нового масиву.
+      filteredNumbers.push(number);
+    }
+  }
 
-  // 3. Повертаємо true, якщо знайдено хоча б одне заборонене слово
-  return includesSpam || includesSale;
+  // 4. Повертаємо новий масив із підходящими числами.
+  return filteredNumbers;
 }
 
-// Виклики для перевірки ментором
+// Перевірки (з вихідних даних завдання)
 
-console.log(checkForSpam("Latest technology news")); // false
-console.log(checkForSpam("JavaScript weekly newsletter")); // false
-console.log(checkForSpam("Get best sale offers now!")); // true
-console.log(checkForSpam("Amazing SalE, only tonight!")); // true
-console.log(checkForSpam("Trust me, this is not a spam message")); // true
-console.log(checkForSpam("Get rid of sPaM emails. Our book in on sale!")); // true
-console.log(checkForSpam("[SPAM] How to earn fast money?")); // true
+console.log(filterArray([1, 2, 3, 4, 5], 3));    // [4, 5]
+console.log(filterArray([1, 2, 3, 4, 5], 4));    // [5]
+console.log(filterArray([1, 2, 3, 4, 5], 5));    // []
+console.log(filterArray([12, 24, 8, 41, 76], 38)); // [41, 76]
+console.log(filterArray([12, 24, 8, 41, 76], 20)); // [24, 41, 76]
